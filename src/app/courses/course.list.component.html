@@ -13,24 +13,23 @@
             <th>Price</th>
             <th>Cod.</th>
             <th>Release Date</th>
-            <th>Description</th>
             <th>Rating</th>
             <th>Options</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let course of filteredCourses"> 
+        <tr *ngFor="let course of filteredCourses">
             <td><img [src]="course.imageUrl" width="40" height="40" alt=""></td>
             <td>{{course.name}}</td>
             <td>{{course.price}}</td>
             <td>{{course.cod | replace: "-":""}}</td>
             <td>{{course.releaseDate | date:'MM/yyyy'}}</td>
-            <td>{{course.description}}</td>
             <td>
                 <app-star [rating]="course.rating"> </app-star>
             </td>
-            <td> 
-                <a [routerLink]="['/courses/info', course.id]" class="btn btn-primary">Edit</a>
+            <td>
+                <a [routerLink]="['/courses/info', course.id]" style="margin-right: 4px;" class="btn btn-primary mr-2">Edit</a>
+                <button class="btn btn-danger" (click)="deleteById(course.id)">Delete</button>
             </td>
         </tr>
     </tbody>

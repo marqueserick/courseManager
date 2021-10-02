@@ -11,10 +11,28 @@ export class CourseListComponent{
     _filterBy!: string;
     constructor(private courseService: CourseService){}
     ngOnInit(): void{
-        this._courses = this.courseService.retrieveAll();
-        this.filteredCourses = this._courses;
+        this.retrieveAll();
     }
 
+    retrieveAll(): void { 
+        this.courseService.retrieveAll().subscribe({
+            next: courses => {
+                this._courses = courses;
+                this.filteredCourses = this._courses;
+            },
+            error: err => console.log('Error', err) 
+        })
+    }
+
+    deleteById(id: number){
+        this.courseService.deleteById(id).subscribe({
+            next:() => {
+                console.log('deleted with sucess');
+                this.retrieveAll();
+            },
+            error: (err: any) => console.log('error: ', err)
+        })
+    }
     set filter(value:string){
         this._filterBy = value;
         this.filteredCourses = this._courses.filter((course: Course) => course.name.toLowerCase()
